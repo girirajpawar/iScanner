@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "132326917383",
+    "firebase_url": "https://rntesseractocrexample.firebaseio.com",
+    "project_id": "docscanner",
+    "storage_bucket": "rntesseractocrexample.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:132326917383:android:ec220f52123585ce",
+        "android_client_info": {
+          "package_name": "com.cerebion.docscanner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "132326917383-jhh16a44q5clsuk5g9kdfgbjl4tvlkhf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBd-aoR_alPedetL7L8MAl8Jcr0_gMz4wY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "132326917383-jhh16a44q5clsuk5g9kdfgbjl4tvlkhf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
