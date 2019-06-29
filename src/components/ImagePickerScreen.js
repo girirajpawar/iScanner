@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   ActivityIndicator,
-  Image,
+  ImageBackground,
   Platform,
   Text,
   TouchableNativeFeedback,
@@ -9,6 +9,7 @@ import {
   View
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
+import ImageProcessing from './ImageProcessing';
 //import RNTesseractOcr from 'react-native-tesseract-ocr';
 import styles from '../../styles';
 import RNMlKitOcr from 'react-native-ml-kit-ocr';
@@ -21,10 +22,6 @@ const imagePickerOptions = {
   storageOptions: {
     skipBackup: true,
   },
-};
-const tessOptions = {
-  whitelist: null,
-  blacklist: null
 };
 
 class ImagePickerScreen extends Component {
@@ -50,14 +47,7 @@ class ImagePickerScreen extends Component {
         this.setState({ isLoading: false, hasErrored: true, errorMessage: response.error });
       } else {
         const source = { uri: response.uri };
-        //this.setState({ imageSource: source, hasErrored: false, errorMessage: null }, this.extractTextFromImage(response.path));
-        RNMlKitOcr.detect(response.path).then(result => {
-          // do something with the data
-          //console.log(JSON.parse(result))
-          //this.setState({ imageSource: source, hasErrored: false, errorMessage: null, isLoading: false, extractedText: result });
-          this.setState({ imageSource: source, hasErrored: false, errorMessage: null }, this.extractTextFromImageUsingMLKit(response.path));
-        })            
-        //this.setState({ imageSource: source, hasErrored: false, errorMessage: null }, this.extractTextFromImageUsingMLKit(response.path));
+        this.setState({ imageSource: source, hasErrored: false, errorMessage: null }, this.extractTextFromImageUsingMLKit(response.path));
       }
     });
   }
@@ -76,7 +66,7 @@ class ImagePickerScreen extends Component {
     //console.log(imagePath)
     RNMlKitOcr.detect(imagePath).then(result => {
       // do something with the data
-      console.log(JSON.parse(result))
+      
       this.setState({ isLoading: false, extractedText: result });
     })
   }
@@ -85,22 +75,22 @@ class ImagePickerScreen extends Component {
     const { errorMessage, extractedText, hasErrored, imageSource, isLoading } = this.state;
     return (
       <View style={styles.container}>
-        <Button onPress={this.selectImage} >
-          <View style={[styles.image, styles.imageContainer, !imageSource && styles.rounded]}>
-            {
-              imageSource === null
-                ? <Text>Tap me!</Text>
-                : <Image style={styles.image} source={imageSource} />
-            }
-          </View>
-        </Button>
+        {
+          imageSource === null
+            ? <Button onPress={this.selectImage} >
+                <View style={[styles.image, styles.imageContainer, !imageSource && styles.rounded]}>
+                  {
+                    <Text>Tap me!</Text>
+                  }
+                </View>
+              </Button>
+            : <ImageProcessing imageSource={imageSource} extractedText={extractedText}/>
+        }
         {
           isLoading
             ? <ActivityIndicator size="large" />
             : (
-              hasErrored
-                ? <Text>{errorMessage}</Text>
-                : <Text>{extractedText}</Text>
+              hasErrored ? <Text>{errorMessage}</Text> : <Text></Text>
             )
         }
       </View>
